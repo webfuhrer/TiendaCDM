@@ -5,14 +5,38 @@ import java.util.ArrayList;
 public class ClasePrincipal {
 
 	public static void main(String[] args) {
-		int saldo=2000;//En la v2, el saldo está en bd
-		String nombre_usuario="Pepe";
-		Cliente c=new Cliente(nombre_usuario,saldo, new ArrayList<Producto>() );
+		
+		
+		Cliente c=null;
+		/*do {
+			///instrucciones se ejeuutaln al menos una vez
+			String nombre_cliente=EntradaSalida.pedirNombreCliente();
+			c=AccesoBD.recuperarCliente(nombre_cliente);
+		}while(c.getSaldo()==0);
+		*/
+		
+		
 		int opcion=EntradaSalida.mostrarMenu();
 		while(opcion!=EntradaSalida.SALIR)
 		{
 			switch(opcion)
 			{
+			case EntradaSalida.ADMIN:
+				boolean admin=false;
+				int n_intentos=0;
+				while(admin==false && n_intentos<2)
+				{
+				//Pedir datos del administrador
+					//Aumentar n_intentos cada vez que pida datos
+					//Darle valor a admin cada vez que pida datos.
+				Administrador a=EntradaSalida.pedirDatosAdmin();//Pide usr y pwd
+				n_intentos++;
+				admin=AccesoDatos.comnprobarAdmin(a);
+				
+				}
+				
+				
+				break;
 			case EntradaSalida.COMPRAR:
 				ArrayList<Producto> lista_productos=AccesoBD.recuperarProductos();
 				int id_producto=EntradaSalida.mostrarProductos(lista_productos);
@@ -31,6 +55,7 @@ public class ClasePrincipal {
 			}
 			opcion=EntradaSalida.mostrarMenu();
 		}
+		AccesoBD.actualizarSaldo(c);
 
 	}
 
